@@ -1,0 +1,29 @@
+.tool-menu-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 1rem;
+}
+
+.tool-menu {
+    display: flex;
+    gap: 4px;
+    justify-content: flex-end;
+}
+
+.tool-button {
+    background: #d9d9d9;
+    border: 1px solid #ccc;
+    padding: 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.tool-content {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    z-index: 10;
+}
