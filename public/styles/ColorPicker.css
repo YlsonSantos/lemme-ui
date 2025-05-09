@@ -1,0 +1,11 @@
+.confirmButtonColorPicker {
+    background: #2231D3;
+    color: #fff;
+    padding: 0.8rem;
+    border-radius: 16px;
+    font-family: 'Inclusive Sans';
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+
+}
