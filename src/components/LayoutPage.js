@@ -30,7 +30,6 @@ const LayoutPage = () => {
   };
 
   const handleLayoutClick = (layout) => {
-    // Se a opção clicada for a mesma que está selecionada, desmarque
     if (layoutSelecionado === layout) {
       setLayoutSelecionado(null);
     } else {
