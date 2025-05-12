@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import '../../public/styles/Header.css';
-import '../../public/styles/global.css'
-import logoCicclo from '../../public/images/cicclologo.svg'
+import '../../public/styles/global.css';
+import logoCicclo from '../../public/images/cicclologo.svg';
 
 const Header = () => {
     return (
@@ -15,7 +15,9 @@ const Header = () => {
                     <Image src={logoCicclo} alt="Logo" width={500} height={40} />
                 </div>
 
-                <button className="button-header button-publish">Publicar</button>
+                <Link href="/layout-page">
+                    <button className="button-header button-publish">Publicar</button>
+                </Link>
             </header>
         </section>
     );
