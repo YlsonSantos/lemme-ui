@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import '../../public/styles/LayoutPage.css';
+import TextEditor from '../components/TextEditor';
 
 const LayoutPage = () => {
   const [mostrarModal, setMostrarModal] = useState(false);
@@ -8,6 +9,8 @@ const LayoutPage = () => {
   const [mostrarSubModalHorizontal, setMostrarSubModalHorizontal] = useState(false);
   const [mostrarSubModalMisto, setMostrarSubModalMisto] = useState(false);
   const [layoutSelecionado, setLayoutSelecionado] = useState(null);
+  const [mostrarEditor, setMostrarEditor] = useState(false);
+  const [layoutFinal, setLayoutFinal] = useState(null);
 
   const abrirModal = () => setMostrarModal(true);
   const fecharModal = () => {
@@ -44,6 +47,12 @@ const LayoutPage = () => {
         <title>Escolher Layout</title>
       </Head>
 
+      {mostrarEditor && (
+        <div className="editor-wrapper">
+          <TextEditor layout={layoutFinal} />
+        </div>
+      )}
+
       <div className="pagina-customizacao">
         <div className="conteudo-central">
           <button className="botao-mais" onClick={abrirModal}>+</button>
@@ -56,10 +65,10 @@ const LayoutPage = () => {
                 {mostrarSubModalColunas
                   ? 'Colunas'
                   : mostrarSubModalHorizontal
-                  ? 'Horizontal'
-                  : mostrarSubModalMisto
-                  ? 'Misto'
-                  : 'Layout da Página'}
+                    ? 'Horizontal'
+                    : mostrarSubModalMisto
+                      ? 'Misto'
+                      : 'Layout da Página'}
               </h3>
               <div className="linha-sublinhada"></div>
 
@@ -73,7 +82,6 @@ const LayoutPage = () => {
 
               {mostrarSubModalColunas && (
                 <div className="modal-colunas-conteudo">
-                  <div className="linha-sublinhada2"></div>
                   <div className="div-cinza">
                     <div className={`opcao-layout ${layoutSelecionado === '1x1' ? 'selecionado' : ''}`} onClick={() => handleLayoutClick('1x1')}>
                       <div className="layout-visual">
@@ -96,14 +104,22 @@ const LayoutPage = () => {
                   </div>
                   <div className="botoes">
                     <button className="botao-voltar" onClick={voltarAoModalAnterior}>Voltar</button>
-                    <button className="botao-adicionar" onClick={() => alert('Adicionar')}>Adicionar</button>
+                    <button
+                      className="botao-adicionar"
+                      onClick={() => {
+                        setLayoutFinal(layoutSelecionado);
+                        setMostrarEditor(true);
+                        fecharModal();
+                      }}
+                    >
+                      Adicionar
+                    </button>
                   </div>
                 </div>
               )}
 
               {mostrarSubModalHorizontal && (
                 <div className="modal-colunas-conteudo">
-                  <div className="linha-sublinhada2"></div>
                   <div className="div-cinza">
                     <div className={`opcao-layout ${layoutSelecionado === 'h-1x1' ? 'selecionado' : ''}`} onClick={() => handleLayoutClick('h-1x1')}>
                       <div className="layout-visual-horizontal">
@@ -126,14 +142,22 @@ const LayoutPage = () => {
                   </div>
                   <div className="botoes">
                     <button className="botao-voltar" onClick={voltarAoModalAnterior}>Voltar</button>
-                    <button className="botao-adicionar" onClick={() => alert('Adicionar')}>Adicionar</button>
+                    <button
+                      className="botao-adicionar"
+                      onClick={() => {
+                        setLayoutFinal(layoutSelecionado);
+                        setMostrarEditor(true);
+                        fecharModal();
+                      }}
+                    >
+                      Adicionar
+                    </button>
                   </div>
                 </div>
               )}
 
               {mostrarSubModalMisto && (
                 <div className="modal-colunas-conteudo">
-                  <div className="linha-sublinhada2"></div>
                   <div className="div-cinza2">
                     <div className={`opcao-layout ${layoutSelecionado === 'm-1' ? 'selecionado' : ''}`} onClick={() => handleLayoutClick('m-1')}>
                       <div className="layout-visual-misto">
@@ -155,7 +179,16 @@ const LayoutPage = () => {
                   </div>
                   <div className="botoes">
                     <button className="botao-voltar" onClick={voltarAoModalAnterior}>Voltar</button>
-                    <button className="botao-adicionar" onClick={() => alert('Adicionar')}>Adicionar</button>
+                    <button
+                      className="botao-adicionar"
+                      onClick={() => {
+                        setLayoutFinal(layoutSelecionado);
+                        setMostrarEditor(true);
+                        fecharModal();
+                      }}
+                    >
+                      Adicionar
+                    </button>
                   </div>
                 </div>
               )}

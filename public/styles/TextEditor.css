@@ -1,0 +1,66 @@
+.layout-misto {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 2px solid #ccc;
+  margin-left: 70px;
+  margin-right: 70px;
+}
+.superior {
+  display: flex;
+  width: 100%;
+  height: 500px;
+  gap: 10px;
+}
+.coluna1 {
+  flex: 1;
+  border: 2px solid #ccc;
+  display: flex;
+  padding: 8px;
+}
+.coluna2 {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.linha {
+  flex: 1;
+  border: 2px solid #ccc;
+  display: flex;
+  padding: 8px;
+}
+.layout-coluna {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.layout-horizontal {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.layout-misto .superior {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.layout-misto .coluna {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.layout-misto-horizontal {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.layout-misto-horizontal > * {
+  flex: 1;
+}
