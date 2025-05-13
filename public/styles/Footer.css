@@ -5,4 +5,8 @@
     padding: 20px 0;
     font-size: 14px;
     border: none;
+    left: 0;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
 }
