@@ -1,6 +1,7 @@
 import React from 'react';
 import { SimpleTextEditor } from './SimpleTextEditor';
 import '../../public/styles/TextEditor.css'
+import { display } from '@mui/system';
 
 const TextEditor = ({ layout }) => {
   const renderLayout = () => {
@@ -71,10 +72,22 @@ const TextEditor = ({ layout }) => {
     } else if (layout === 'm-2') {
       return (
         <div className="layout-misto-horizontal">
-          <SimpleTextEditor />
-          <SimpleTextEditor />
-          <SimpleTextEditor />
-          <SimpleTextEditor />
+          <div className="superior" style={{display: 'flex', flexDirection: 'column', gap: '10px', width: '100%'}}>
+            <div className="linha">
+              <SimpleTextEditor />
+            </div>
+            <div style={{display: 'flex', gap: '10px', width: '100%', justifyContent: 'space-between'}}>
+              <div className="coluna1" style={{flex: '1 1 0', minWidth: 0}}>
+                <SimpleTextEditor />
+              </div>
+              <div className="coluna1" style={{flex: '1 1 0', minWidth: 0}}>
+                <SimpleTextEditor />
+              </div>
+              <div className="coluna1" style={{flex: '1 1 0', minWidth: 0}}>
+                <SimpleTextEditor />
+              </div>
+            </div>
+          </div>
         </div>
       );
     }
