@@ -32,14 +32,15 @@
 }
 .layout-coluna {
   display: flex;
-  flex-direction: column;
   gap: 10px;
+  justify-content: center;
 }
 
 .layout-horizontal {
   display: flex;
   flex-direction: row;
   gap: 10px;
+  justify-content: center;
 }
 
 .layout-misto .superior {
@@ -57,10 +58,9 @@
 
 .layout-misto-horizontal {
   display: flex;
-  flex-direction: row;
-  gap: 10px;
-}
-
-.layout-misto-horizontal > * {
-  flex: 1;
+  flex-direction: column;
+  padding: 10px;
+  border: 2px solid #ccc;
+  margin-left: 70px;
+  margin-right: 70px;
 }
