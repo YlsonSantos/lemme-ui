@@ -10,7 +10,7 @@ const LayoutPage = () => {
   const [mostrarSubModalMisto, setMostrarSubModalMisto] = useState(false);
   const [layoutSelecionado, setLayoutSelecionado] = useState(null);
   const [mostrarEditor, setMostrarEditor] = useState(false);
-  const [layoutFinal, setLayoutFinal] = useState(null);
+  const [layoutsFinais, setLayoutsFinais] = useState([]);
 
   const abrirModal = () => setMostrarModal(true);
   const fecharModal = () => {
@@ -49,9 +49,11 @@ const LayoutPage = () => {
 
       {mostrarEditor && (
         <div className="editor-wrapper">
-          <TextEditor layout={layoutFinal} />
-        </div>
-      )}
+          {layoutsFinais.map((layout, idx) => (
+            <TextEditor key={idx} layout={layout} />
+        ))}
+      </div>
+)}
 
       <div className="pagina-customizacao">
         <div className="conteudo-central">
@@ -107,10 +109,11 @@ const LayoutPage = () => {
                     <button
                       className="botao-adicionar"
                       onClick={() => {
-                        setLayoutFinal(layoutSelecionado);
-                        setMostrarEditor(true);
-                        fecharModal();
-                      }}
+                        if (layoutSelecionado) {
+                          setLayoutsFinais(prev => [...prev, layoutSelecionado]);
+                          setMostrarEditor(true);
+                          fecharModal();
+                      }}}
                     >
                       Adicionar
                     </button>
@@ -145,10 +148,11 @@ const LayoutPage = () => {
                     <button
                       className="botao-adicionar"
                       onClick={() => {
-                        setLayoutFinal(layoutSelecionado);
+                        if (layoutSelecionado) {
+                        setLayoutsFinais(prev => [...prev, layoutSelecionado]);
                         setMostrarEditor(true);
                         fecharModal();
-                      }}
+                      }}}
                     >
                       Adicionar
                     </button>
@@ -182,10 +186,11 @@ const LayoutPage = () => {
                     <button
                       className="botao-adicionar"
                       onClick={() => {
-                        setLayoutFinal(layoutSelecionado);
-                        setMostrarEditor(true);
-                        fecharModal();
-                      }}
+                        if (layoutSelecionado) {
+                          setLayoutsFinais(prev => [...prev, layoutSelecionado]);
+                          setMostrarEditor(true);
+                          fecharModal();
+                      }}}
                     >
                       Adicionar
                     </button>
