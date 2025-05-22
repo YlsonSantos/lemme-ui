@@ -10,9 +10,7 @@ const LayoutPage = () => {
   const [mostrarSubModalMisto, setMostrarSubModalMisto] = useState(false);
   const [layoutSelecionado, setLayoutSelecionado] = useState(null);
   const [mostrarEditor, setMostrarEditor] = useState(false);
-  const [layoutFinal, setLayoutFinal] = useState(null);
-
-  // Estado para imagem de fundo
+  const [layoutsFinais, setLayoutsFinais] = useState([]);
   const [backgroundImage, setBackgroundImage] = useState(null);
 
   const abrirModal = () => setMostrarModal(true);
@@ -36,14 +34,9 @@ const LayoutPage = () => {
   };
 
   const handleLayoutClick = (layout) => {
-    if (layoutSelecionado === layout) {
-      setLayoutSelecionado(null);
-    } else {
-      setLayoutSelecionado(layout);
-    }
+    setLayoutSelecionado(prev => (prev === layout ? null : layout));
   };
 
-  // Função para definir a imagem de fundo (exemplo)
   const setarImagemFundo = (url) => {
     setBackgroundImage(url);
   };
@@ -71,7 +64,15 @@ const LayoutPage = () => {
         }}
       />
 
-      {/* Conteúdo da página com zIndex maior para ficar acima do fundo e botão centralizado */}
+      {/* Renderiza editores caso mostrarEditor esteja true */}
+      {mostrarEditor && (
+        <div className="editor-wrapper">
+          {layoutsFinais.map((layout, idx) => (
+            <TextEditor key={idx} layout={layout} />
+          ))}
+        </div>
+      )}
+
       <div
         className="pagina-customizacao"
         style={{
@@ -85,9 +86,7 @@ const LayoutPage = () => {
           background: 'white',
         }}
       >
-        <button className="botao-mais" onClick={abrirModal}>
-          +
-        </button>
+        <button className="botao-mais" onClick={abrirModal}>+</button>
 
         {mostrarModal && (
           <div className="modal-overlay" onClick={handleOverlayClick}>
@@ -107,74 +106,39 @@ const LayoutPage = () => {
                 !mostrarSubModalHorizontal &&
                 !mostrarSubModalMisto && (
                   <>
-                    <button
-                      className="botao-modal"
-                      onClick={() => setMostrarSubModalColunas(true)}
-                    >
-                      Colunas
-                    </button>
-                    <button
-                      className="botao-modal"
-                      onClick={() => setMostrarSubModalHorizontal(true)}
-                    >
-                      Horizontal
-                    </button>
-                    <button
-                      className="botao-modal"
-                      onClick={() => setMostrarSubModalMisto(true)}
-                    >
-                      Misto
-                    </button>
+                    <button className="botao-modal" onClick={() => setMostrarSubModalColunas(true)}>Colunas</button>
+                    <button className="botao-modal" onClick={() => setMostrarSubModalHorizontal(true)}>Horizontal</button>
+                    <button className="botao-modal" onClick={() => setMostrarSubModalMisto(true)}>Misto</button>
                   </>
-                )}
+              )}
 
               {mostrarSubModalColunas && (
                 <div className="modal-colunas-conteudo">
                   <div className="div-cinza">
-                    <div
-                      className={`opcao-layout ${
-                        layoutSelecionado === '1x1' ? 'selecionado' : ''
-                      }`}
-                      onClick={() => handleLayoutClick('1x1')}
-                    >
-                      <div className="layout-visual">
-                        <div className="caixa"></div>
+                    {['1x1', '1x2', '1x3'].map(layout => (
+                      <div
+                        key={layout}
+                        className={`opcao-layout ${layoutSelecionado === layout ? 'selecionado' : ''}`}
+                        onClick={() => handleLayoutClick(layout)}
+                      >
+                        <div className="layout-visual">
+                          {Array.from({ length: parseInt(layout.split('x')[1]) }).map((_, i) => (
+                            <div key={i} className="caixa"></div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                    <div
-                      className={`opcao-layout ${
-                        layoutSelecionado === '1x2' ? 'selecionado' : ''
-                      }`}
-                      onClick={() => handleLayoutClick('1x2')}
-                    >
-                      <div className="layout-visual">
-                        <div className="caixa"></div>
-                        <div className="caixa"></div>
-                      </div>
-                    </div>
-                    <div
-                      className={`opcao-layout ${
-                        layoutSelecionado === '1x3' ? 'selecionado' : ''
-                      }`}
-                      onClick={() => handleLayoutClick('1x3')}
-                    >
-                      <div className="layout-visual">
-                        <div className="caixa"></div>
-                        <div className="caixa"></div>
-                        <div className="caixa"></div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                   <div className="botoes">
-                    <button className="botao-voltar" onClick={voltarAoModalAnterior}>
-                      Voltar
-                    </button>
+                    <button className="botao-voltar" onClick={voltarAoModalAnterior}>Voltar</button>
                     <button
                       className="botao-adicionar"
                       onClick={() => {
-                        setLayoutFinal(layoutSelecionado);
-                        setMostrarEditor(true);
-                        fecharModal();
+                        if (layoutSelecionado) {
+                          setLayoutsFinais(prev => [...prev, layoutSelecionado]);
+                          setMostrarEditor(true);
+                          fecharModal();
+                        }
                       }}
                     >
                       Adicionar
@@ -186,50 +150,30 @@ const LayoutPage = () => {
               {mostrarSubModalHorizontal && (
                 <div className="modal-colunas-conteudo">
                   <div className="div-cinza">
-                    <div
-                      className={`opcao-layout ${
-                        layoutSelecionado === 'h-1x1' ? 'selecionado' : ''
-                      }`}
-                      onClick={() => handleLayoutClick('h-1x1')}
-                    >
-                      <div className="layout-visual-horizontal">
-                        <div className="caixa-horizontal"></div>
+                    {['h-1x1', 'h-1x2', 'h-1x3'].map(layout => (
+                      <div
+                        key={layout}
+                        className={`opcao-layout ${layoutSelecionado === layout ? 'selecionado' : ''}`}
+                        onClick={() => handleLayoutClick(layout)}
+                      >
+                        <div className="layout-visual-horizontal">
+                          {Array.from({ length: parseInt(layout.split('x')[1]) }).map((_, i) => (
+                            <div key={i} className="caixa-horizontal"></div>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                    <div
-                      className={`opcao-layout ${
-                        layoutSelecionado === 'h-1x2' ? 'selecionado' : ''
-                      }`}
-                      onClick={() => handleLayoutClick('h-1x2')}
-                    >
-                      <div className="layout-visual-horizontal">
-                        <div className="caixa-horizontal"></div>
-                        <div className="caixa-horizontal"></div>
-                      </div>
-                    </div>
-                    <div
-                      className={`opcao-layout ${
-                        layoutSelecionado === 'h-1x3' ? 'selecionado' : ''
-                      }`}
-                      onClick={() => handleLayoutClick('h-1x3')}
-                    >
-                      <div className="layout-visual-horizontal">
-                        <div className="caixa-horizontal"></div>
-                        <div className="caixa-horizontal"></div>
-                        <div className="caixa-horizontal"></div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                   <div className="botoes">
-                    <button className="botao-voltar" onClick={voltarAoModalAnterior}>
-                      Voltar
-                    </button>
+                    <button className="botao-voltar" onClick={voltarAoModalAnterior}>Voltar</button>
                     <button
                       className="botao-adicionar"
                       onClick={() => {
-                        setLayoutFinal(layoutSelecionado);
-                        setMostrarEditor(true);
-                        fecharModal();
+                        if (layoutSelecionado) {
+                          setLayoutsFinais(prev => [...prev, layoutSelecionado]);
+                          setMostrarEditor(true);
+                          fecharModal();
+                        }
                       }}
                     >
                       Adicionar
@@ -241,44 +185,43 @@ const LayoutPage = () => {
               {mostrarSubModalMisto && (
                 <div className="modal-colunas-conteudo">
                   <div className="div-cinza2">
-                    <div
-                      className={`opcao-layout ${
-                        layoutSelecionado === 'm-1' ? 'selecionado' : ''
-                      }`}
-                      onClick={() => handleLayoutClick('m-1')}
-                    >
-                      <div className="layout-visual-misto">
-                        <div className="caixav-misto"></div>
-                        <div className="coluna">
-                          <div className="caixah-misto"></div>
-                          <div className="caixah-misto"></div>
+                    {['m-1', 'm-2'].map(layout => (
+                      <div
+                        key={layout}
+                        className={`opcao-layout ${layoutSelecionado === layout ? 'selecionado' : ''}`}
+                        onClick={() => handleLayoutClick(layout)}
+                      >
+                        <div className={`layout-visual-${layout === 'm-1' ? 'misto' : 'misto2'}`}>
+                          {layout === 'm-1' ? (
+                            <>
+                              <div className="caixav-misto"></div>
+                              <div className="coluna">
+                                <div className="caixah-misto"></div>
+                                <div className="caixah-misto"></div>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="caixah-misto"></div>
+                              <div className="caixah-misto"></div>
+                              <div className="caixah-misto"></div>
+                              <div className="caixah-misto"></div>
+                            </>
+                          )}
                         </div>
                       </div>
-                    </div>
-                    <div
-                      className={`opcao-layout ${
-                        layoutSelecionado === 'm-2' ? 'selecionado' : ''
-                      }`}
-                      onClick={() => handleLayoutClick('m-2')}
-                    >
-                      <div className="layout-visual-misto2">
-                        <div className="caixah-misto"></div>
-                        <div className="caixah-misto"></div>
-                        <div className="caixah-misto"></div>
-                        <div className="caixah-misto"></div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                   <div className="botoes">
-                    <button className="botao-voltar" onClick={voltarAoModalAnterior}>
-                      Voltar
-                    </button>
+                    <button className="botao-voltar" onClick={voltarAoModalAnterior}>Voltar</button>
                     <button
                       className="botao-adicionar"
                       onClick={() => {
-                        setLayoutFinal(layoutSelecionado);
-                        setMostrarEditor(true);
-                        fecharModal();
+                        if (layoutSelecionado) {
+                          setLayoutsFinais(prev => [...prev, layoutSelecionado]);
+                          setMostrarEditor(true);
+                          fecharModal();
+                        }
                       }}
                     >
                       Adicionar
@@ -287,12 +230,6 @@ const LayoutPage = () => {
                 </div>
               )}
             </div>
-          </div>
-        )}
-
-        {mostrarEditor && (
-          <div className="editor-wrapper">
-            <TextEditor layout={layoutFinal} />
           </div>
         )}
       </div>
