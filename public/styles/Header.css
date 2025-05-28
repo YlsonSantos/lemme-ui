@@ -1,18 +1,16 @@
-#Header {
-    background: #89CFE9;
-    font-family: 'Inclusive Sans', 'Comfortaa', sans-serif;
-}
-
 .header {
+    background: #89CFE9;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding: 10px 3rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
 }
-
-
 
 .button-header {
     padding: 10px 20px;

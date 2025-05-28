@@ -293,3 +293,7 @@
     height: 170px;
     border-radius: 4px;
 }
+
+.editor-wrapper {
+    border: 50px;
+}
