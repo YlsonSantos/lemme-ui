@@ -46,8 +46,8 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
-  white-space: nowrap;       
-  overflow: hidden;           
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
   max-width: 60px;
 }
@@ -63,8 +63,8 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
-  top: 100%; 
-  left: 9px; 
+  top: 100%;
+  left: 9px;
   z-index: 10;
 }
 
@@ -79,8 +79,8 @@
   background-color: white;
   border-radius: 5px;
   cursor: pointer;
-  top: 100%; 
-  left: 84px; 
+  top: 100%;
+  left: 84px;
   z-index: 10;
 }
 
@@ -134,20 +134,19 @@ input[type="color"] {
 
 .fixedFontBar {
   position: fixed;
-  overflow: visible;
   top: 147px;
-  right: -167px;
-  transform: translateX(-50%);
+  right: 24px; /* Alinhado com o botão mais à direita */
   background: white;
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 10px;
   display: flex;
-  max-height: 28px;
   flex-direction: row;
   align-items: center;
   gap: 10px;
   z-index: 1000;
+  max-width: 90%;
+  flex-wrap: wrap;
 }
 
 .FonteButton {
