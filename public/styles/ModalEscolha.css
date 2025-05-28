@@ -1,0 +1,123 @@
+.modal-conteudo-slot-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-conteudo-slot-box {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 300px;
+  text-align: center;
+  position: relative;
+}
+
+.modal-conteudo-slot-titulo {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.modal-conteudo-slot-linha {
+  width: 100%;
+  height: 2px;
+  background-color: #ccc;
+  margin-bottom: 20px;
+}
+
+.modal-conteudo-slot-botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.modal-conteudo-slot-botao {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  background-color: #0070f3;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modal-conteudo-slot-botao:hover {
+  background-color: #005bb5;
+}
+
+.modal-conteudo-slot-cancelar {
+  background-color: #ddd;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+}
+
+.content-slot-placeholder {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mais-sinal {
+    font-size: 1.5rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    color: #000;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.custom-upload-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.custom-upload-btn:hover {
+    background-color: #0056b3;
+}
+
+.imagem-crop {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.imagem-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  flex: 1
+}
+
+.imagem-placeholder {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
