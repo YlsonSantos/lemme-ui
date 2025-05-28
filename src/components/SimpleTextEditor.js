@@ -7,7 +7,8 @@ import { Color } from '@tiptap/extension-color';
 import TextStyle from '@tiptap/extension-text-style';
 import { IoColorPaletteOutline } from 'react-icons/io5';
 import { FontSize } from './FontSizeExtension';
-import FontFamily from '@tiptap/extension-font-family'
+import FontFamily from '@tiptap/extension-font-family';
+import { LineHeight } from './LineHeight';
 import {
   RxFontBold,
   RxFontItalic,
@@ -26,7 +27,15 @@ const Toolbar = () => {
   const editor = activeEditor;
   const [currentColor, setCurrentColor] = useState('#000000');
   const [openDropdown, setOpenDropdown] = useState(null);
-
+  let activeFont = 'Fonte';
+  if (editor) {
+    const attrs = editor.getAttributes('textStyle');
+    if (attrs && attrs.fontFamily) {
+      activeFont = attrs.fontFamily;
+    }
+  }
+  const activeFontSize = editor ? (editor.getAttributes('fontSize').fontSize || '12px') : '12px';
+  const activeLineHeight = editor ? (editor.getAttributes('lineHeight').lineHeight || '1.0') : '1.0';
 
   if (!editor || !isFocused) return null;
 
@@ -45,6 +54,7 @@ const Toolbar = () => {
     <div className='fixedFontBar'>
       <div tabIndex={-1}>
         <button
+          title={activeFont}
           className="ChevromEditor"
           onMouseDown={(e) => {
             e.preventDefault();
@@ -52,7 +62,7 @@ const Toolbar = () => {
             setOpenDropdown(prev => (prev === 'font' ? null : 'font'));
           }}
         >
-          Fonte <RxChevronDown />
+          {activeFont} <RxChevronDown />
         </button>
         {openDropdown === 'font' && (
           <div className="dropdown-menu">
@@ -77,7 +87,7 @@ const Toolbar = () => {
             setOpenDropdown(prev => (prev === 'size' ? null : 'size'));
           }}
         >
-          12 <RxChevronDown />
+          {activeFontSize} <RxChevronDown />
         </button>
         {openDropdown === 'size' && (
           <div className="dropdown-menu2">
@@ -88,6 +98,35 @@ const Toolbar = () => {
                 className={`FonteButton ${editor.getAttributes('textStyle').fontSize === `${size}px` ? 'is-active' : ''}`}
               >
                 {size}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+      <div tabIndex={-1}>
+        <button
+          className="ChevromEditor"
+          onMouseDown={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setOpenDropdown(prev => (prev === 'lineHeight' ? null : 'lineHeight'));
+          }}
+        >
+          {activeLineHeight} <RxChevronDown />
+        </button>
+        {openDropdown === 'lineHeight' && (
+          <div className="dropdown-menu2">
+            {['1.0', '1.5', '2.0', '2.5'].map(value => (
+              <button
+                key={value}
+                onMouseDown={e => {
+                  e.preventDefault();
+                  editor.chain().focus().setLineHeight(value).run();
+                  setOpenDropdown(null);
+                }}
+                className={`FonteButton ${editor.getAttributes('lineHeight').lineHeight === value ? 'is-active' : ''}`}
+              >
+                {value}
               </button>
             ))}
           </div>
@@ -106,14 +145,10 @@ const Toolbar = () => {
         <RxUnderline />
       </button>
       <div style={{ position: 'relative' }}>
-        <button
-          className='custom-color-picker'
-        >
+        <button className='custom-color-picker'>
           <IoColorPaletteOutline size={14} style={{ color: currentColor }} />
         </button>
-        <div
-          className="hidden-color-input"
-        >
+        <div className="hidden-color-input">
           <input
             type="color"
             value={currentColor}
@@ -158,28 +193,16 @@ export function SimpleTextEditor() {
       Color,
       FontFamily,
       FontSize,
+      LineHeight,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
     content: '<p>Digite seu texto aqui...</p>',
+    injectCSS: true,
     onFocus: () => {
       setActiveEditor(editor);
       setIsFocused(true);
     },
-    onBlur: (event) => {
-      const relatedTarget = event.relatedTarget;
-      const isToolbarElement = relatedTarget &&
-        (relatedTarget.closest('.fixedFontBar') ||
-          relatedTarget.closest('.hidden-color-input') ||
-          relatedTarget.closest('.dropdown-menu2') ||
-          relatedTarget.closest('.dropdown-menu') ||
-          relatedTarget.classList.contains('FonteButton') ||
-          relatedTarget.closest('.ChevromEditor'));
-
-
-      if (!isToolbarElement) {
-        setIsFocused(false);
-      }
-    },
+    // 👇 Removemos onBlur daqui
   });
 
   useEffect(() => {
@@ -192,16 +215,16 @@ export function SimpleTextEditor() {
     const handleClickOutside = (event) => {
       if (editor) {
         const isEditorClick = editor.view.dom.contains(event.target);
-        const isToolbarClick = event.target.closest('.fixedFontBar') ||
+        const isToolbarClick =
+          event.target.closest('.fixedFontBar') ||
           event.target.closest('.hidden-color-input') ||
           event.target.closest('.ChevromEditor') ||
           event.target.closest('.dropdown-menu') ||
-          relatedTarget.classList.contains('FonteButton') ||
+          event.target.classList.contains('FonteButton') ||
           event.target.closest('.dropdown-menu2');
 
         if (!isEditorClick && !isToolbarClick) {
           setIsFocused(false);
-          setOpenDropdown(null);
         }
       }
     };
@@ -214,12 +237,10 @@ export function SimpleTextEditor() {
 
   return (
     <>
-      <div className="simple-text-editor" style={{ marginTop: '100px' }}>
-        <EditorContent editor={editor} />
+      <div className="simple-text-editor">
+        <EditorContent editor={editor} className="editor-content" />
       </div>
-      {editor && (
-        <Toolbar />
-      )}
+      {editor && <Toolbar />}
     </>
   );
 }

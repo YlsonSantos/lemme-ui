@@ -1,9 +1,31 @@
 .simple-text-editor {
-  border: 1px dashed #ccc;
-  width: 300px;
-  margin: 10px;
-  padding: 10px;
+  width: 100%;
+  min-width: 10px;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
+
+.simple-text-editor,
+.simple-text-editor > div,
+.tiptap.ProseMirror {
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+}
+
+.tiptap.ProseMirror p:only-child,
+.tiptap.ProseMirror p:empty {
+  flex: 1 1 auto;
+  margin: 0;
+  min-height: 100%;
+  height: 100%;
+}
+
 .buttonEditor {
   border: 1px solid #ccc;
   border-radius: 50%;
@@ -12,9 +34,11 @@
   width: 25px;
   height: 25px;
 }
+
 .buttonEditor:hover {
   background-color: #cccd;
 }
+
 .ChevromEditor {
   display: flex;
   align-items: center;
@@ -22,7 +46,12 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
+  white-space: nowrap;       
+  overflow: hidden;           
+  text-overflow: ellipsis;
+  max-width: 60px;
 }
+
 .dropdown-menu {
   display: flex;
   position: absolute;
@@ -30,6 +59,7 @@
   padding: 1px;
   flex-direction: column;
   gap: 3px;
+  background-color: white;
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
@@ -37,6 +67,7 @@
   left: 9px; 
   z-index: 10;
 }
+
 .dropdown-menu2 {
   display: flex;
   position: absolute;
@@ -45,26 +76,32 @@
   flex-direction: column;
   gap: 3px;
   border: 1px solid #ccc;
+  background-color: white;
   border-radius: 5px;
   cursor: pointer;
   top: 100%; 
   left: 84px; 
   z-index: 10;
 }
+
 .ChevromEditor:hover {
   background-color: #cccd;
 }
+
 .buttonEditorAlign {
   border: none;
   cursor: pointer;
   padding: 5px;
 }
+
 .buttonEditorAlign:not(:last-child) {
   border-right: 1px solid #ccc;
 }
+
 .buttonEditorAlign:hover {
   background-color: #cccd;
 }
+
 .custom-color-picker {
   border: 1px solid #ccc;
   position: relative;
@@ -75,23 +112,31 @@
   border-radius: 50%;
   background-color: #eee;
 }
+
 .hidden-color-input {
   position: absolute;
   opacity: 0;
   width: 100%;
   height: 100%;
-  left: 0;
+  right: 0;
   top: 0;
   cursor: pointer;
 }
+
+input[type="color"] {
+  width: 24px;
+  height: 24px;
+}
+
 .custom-color-picker:hover {
   background-color: #cccd;
 }
+
 .fixedFontBar {
   position: fixed;
   overflow: visible;
   top: 147px;
-  left: 88.5%;
+  right: -167px;
   transform: translateX(-50%);
   background: white;
   border: 1px solid #ccc;
@@ -104,15 +149,23 @@
   gap: 10px;
   z-index: 1000;
 }
+
 .FonteButton {
   display: flex;
   width: 100%;
   background: white;
   align-items: center;
-  border: none;
+  border: white;
   padding: 5px;
   cursor: pointer;
 }
+
 .FonteButton:hover {
   background-color: #cccd;
+}
+
+/* NOVO: margem interna no conteúdo do editor */
+.editor-content {
+  padding: 24px;
+  box-sizing: border-box;
 }

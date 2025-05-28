@@ -1,9 +1,8 @@
 .tool-menu-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin: 1rem;
+  position: fixed;
+  top: 90px;
+  right: 20px;
+  z-index: 1000;
 }
 
 .tool-menu {
