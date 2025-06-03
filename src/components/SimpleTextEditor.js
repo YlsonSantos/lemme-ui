@@ -215,7 +215,7 @@ const Toolbar = () => {
   );
 };
 
-export function SimpleTextEditor() {
+export function SimpleTextEditor({ value = '<p>Digite seu texto aqui...</p>', onContentChange }) {
   const { setActiveEditor, setIsFocused } = useContext(ActiveEditorContext);
 
   const editor = useEditor({
@@ -229,7 +229,12 @@ export function SimpleTextEditor() {
       LineHeight,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
     ],
-    content: '<p>Digite seu texto aqui...</p>',
+    content: value || '<p>Digite seu texto aqui...</p>',
+    onUpdate({ editor }) {
+      if (onContentChange) {
+        onContentChange(editor.getJSON());
+      }
+    },
     injectCSS: true,
     onFocus: () => {
       setActiveEditor(editor);
@@ -238,10 +243,11 @@ export function SimpleTextEditor() {
   });
 
   useEffect(() => {
-    if (editor && document.activeElement === editor.view.dom) {
-      setActiveEditor(editor);
+    if (editor && value !== editor.getHTML()) {
+      editor.commands.setContent(value || '<p>Digite seu texto aqui...</p>');
     }
-  }, [editor, setActiveEditor]);
+    // eslint-disable-next-line
+  }, [value]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
