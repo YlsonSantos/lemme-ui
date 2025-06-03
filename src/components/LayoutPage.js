@@ -49,11 +49,9 @@ const LayoutPage = () => {
 
       {mostrarEditor && (
         <div className="editor-wrapper">
-          {layoutsFinais.map((layout, idx) => (
-            <TextEditor key={idx} layout={layout} />
-        ))}
-      </div>
-)}
+          <TextEditor layoutsFinais={layoutsFinais} />
+        </div>
+      )}
 
       <div className="pagina-customizacao">
         <div className="conteudo-central">
@@ -113,7 +111,8 @@ const LayoutPage = () => {
                           setLayoutsFinais(prev => [...prev, layoutSelecionado]);
                           setMostrarEditor(true);
                           fecharModal();
-                      }}}
+                        }
+                      }}
                     >
                       Adicionar
                     </button>
@@ -149,10 +148,11 @@ const LayoutPage = () => {
                       className="botao-adicionar"
                       onClick={() => {
                         if (layoutSelecionado) {
-                        setLayoutsFinais(prev => [...prev, layoutSelecionado]);
-                        setMostrarEditor(true);
-                        fecharModal();
-                      }}}
+                          setLayoutsFinais(prev => [...prev, layoutSelecionado]);
+                          setMostrarEditor(true);
+                          fecharModal();
+                        }
+                      }}
                     >
                       Adicionar
                     </button>
@@ -190,7 +190,8 @@ const LayoutPage = () => {
                           setLayoutsFinais(prev => [...prev, layoutSelecionado]);
                           setMostrarEditor(true);
                           fecharModal();
-                      }}}
+                        }
+                      }}
                     >
                       Adicionar
                     </button>

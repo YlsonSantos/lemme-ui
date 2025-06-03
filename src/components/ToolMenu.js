@@ -36,12 +36,15 @@ const ToolMenu = () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [activeTool]);
+
     const toggleColorTool = () => {
         setActiveTool((prev) => (prev === 'color' ? null : 'color'));
     };
+
     const openFontTool = () => {
         setActiveTool('font');
     };
+
     return (
         <div className='tool-menu-container'>
             <div className='tool-menu'>
@@ -70,7 +73,13 @@ const ToolMenu = () => {
             {activeTool && (
                 <div ref={toolRef} className='tool-content'>
                     {activeTool === 'color' && (
-                        <ColorPicker onChange={(color) => console.log('Cor escolhida:', color)} />
+                        <ColorPicker
+                            onChange={(color) => {
+                                document.querySelectorAll('.simple-text-editor').forEach(el => {
+                                    el.style.backgroundColor = color;
+                                });
+                            }}
+                        />
                     )}
                     {activeTool === 'font' && (
                         <div className="dropdown">
