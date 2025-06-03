@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import { SimpleTextEditor } from './SimpleTextEditor';
 import '../../public/styles/ModalEscolha.css';
 
-const ContentSlot = () => {
+const ContentSlot = ({ value, onContentChange }) => {
     const [contentType, setContentType] = useState(null);
     const [mostrarModalEscolha, setMostrarModalEscolha] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
@@ -20,10 +20,19 @@ const ContentSlot = () => {
         }
     };
 
-    const handleImageChange = (e) => {
+    const handleTextChange = (JSON) => {
+        onContentChange && onContentChange({ type: 'text', content: JSON });
+    };
+
+    const handleImageChange = async (e) => {
         const file = e.target.files[0];
         if (file && file.type.startsWith('image/')) {
-            setImageUrl(URL.createObjectURL(file));
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                setImageUrl(event.target.result);
+                onContentChange && onContentChange({ type: 'image', content: event.target.result });
+            };
+            reader.readAsDataURL(file);
         }
     };
 
@@ -32,7 +41,7 @@ const ContentSlot = () => {
     };
 
     if (contentType === 'text') {
-        return <SimpleTextEditor />;
+        return <SimpleTextEditor value={value?.content || ''} onContentChange={handleTextChange}/>;
     }
 
     if (contentType === 'image') {

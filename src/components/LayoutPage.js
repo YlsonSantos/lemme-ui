@@ -49,9 +49,7 @@ const LayoutPage = () => {
 
       {mostrarEditor && (
         <div className="editor-wrapper">
-          {layoutsFinais.map((layout, idx) => (
-            <TextEditor key={idx} layout={layout} />
-          ))}
+          <TextEditor layoutsFinais={layoutsFinais} />
         </div>
       )}
 
