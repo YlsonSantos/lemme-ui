@@ -83,7 +83,7 @@ const TextEditor = ({ layoutsFinais }) => {
   const [layouts, setLayouts] = useState(
     layoutsFinais.map(layout => ({
       layout,
-      content: Array(layoutSlotCount[layout]).fill(null)
+      content: Array(layoutSlotCount[layout]).fill({ type: 'text', content: '<p></p>' })
     }))
   );
 
@@ -94,7 +94,7 @@ const TextEditor = ({ layoutsFinais }) => {
         if (!newLayouts[idx] || newLayouts[idx].layout !== layout) {
           newLayouts[idx] = {
             layout,
-            content: Array(layoutSlotCount[layout]).fill(null)
+            content: Array(layoutSlotCount[layout]).fill({ type: 'text', content: '<p></p>' })
           };
         }
       });

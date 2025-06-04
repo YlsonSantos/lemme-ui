@@ -41,7 +41,7 @@ const ContentSlot = ({ value, onContentChange }) => {
     };
 
     if (contentType === 'text') {
-        return <SimpleTextEditor value={value?.content || ''} onContentChange={handleTextChange}/>;
+        return <SimpleTextEditor value={value?.content || '<p></p>'} onContentChange={handleTextChange}/>;
     }
 
     if (contentType === 'image') {
