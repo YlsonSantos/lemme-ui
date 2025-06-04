@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import '../../public/styles/global.css'
 export const metadata = {
   title: 'Cicclo',
