@@ -135,7 +135,7 @@ input[type="color"] {
 .fixedFontBar {
   position: fixed;
   top: 147px;
-  right: 24px; /* Alinhado com o botão mais à direita */
+  right: 24px;
   background: white;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -161,10 +161,4 @@ input[type="color"] {
 
 .FonteButton:hover {
   background-color: #cccd;
-}
-
-/* NOVO: margem interna no conteúdo do editor */
-.editor-content {
-  padding: 24px;
-  box-sizing: border-box;
 }

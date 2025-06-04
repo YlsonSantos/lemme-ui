@@ -239,7 +239,8 @@ export function SimpleTextEditor({ value = '<p>Digite seu texto aqui...</p>', on
     onFocus: () => {
       setActiveEditor(editor);
       setIsFocused(true);
-    }
+    },
+    immediatelyRender: false,
   });
 
   useEffect(() => {
@@ -276,7 +277,7 @@ export function SimpleTextEditor({ value = '<p>Digite seu texto aqui...</p>', on
   return (
     <>
       <div className="simple-text-editor">
-        <EditorContent editor={editor} className="editor-content" />
+        <EditorContent editor={editor} />
       </div>
       {editor && <Toolbar />}
     </>
